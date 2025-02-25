@@ -47,7 +47,7 @@ private:
 class metal : public material
 {
 public:
-	metal(const color &albedo, double fuzz) : albedo(albedo), fuzz(fuzz < 1 ? fuzz : 1) {}
+	metal(const color &albedo, double fuzz = 0) : albedo(albedo), fuzz(fuzz < 1 ? fuzz : 1) {}
 
 	bool scatter(const ray &r_in, const hit_record &rec, color &attenuation, ray &scattered)
 		const override
@@ -67,7 +67,7 @@ private:
 class dielectric : public material
 {
 public:
-	dielectric(double refraction_index) : refraction_index(refraction_index) {}
+	dielectric(double refraction_index, double fuzz = 0) : refraction_index(refraction_index), fuzz(fuzz) {}
 
 	bool scatter(const ray &r_in, const hit_record &rec, color &attenuation, ray &scattered)
 		const override
@@ -86,6 +86,7 @@ public:
 			direction = reflect(unit_direction, rec.normal);
 		else
 			direction = refract(unit_direction, rec.normal, ri);
+		direction = unit_vector(direction) + (fuzz * random_unit_vector());
 
 		scattered = ray(rec.p, direction);
 		return true;
@@ -95,6 +96,7 @@ private:
 	// Refractive index in vacuum or air, or the ratio of the material's refractive index over
 	// the refractive index of the enclosing media
 	double refraction_index;
+	double fuzz;
 
 	static double reflectance(double cosine, double refraction_index) {
         // Use Schlick's approximation for reflectance.
