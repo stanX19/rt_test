@@ -3,14 +3,14 @@
 
 #include "vulkan_test.hpp"
 
-class ray {
+class Ray {
   public:
-    ray() {}
+    Ray() {}
 
-    ray(const point3& origin, const vec3& direction) : orig(origin), dir(direction) {}
+    Ray(const point3& origin, const Vec3& direction) : orig(origin), dir(direction) {}
 
     const point3& origin() const  { return orig; }
-    const vec3& direction() const { return dir; }
+    const Vec3& direction() const { return dir; }
 
     point3 at(double t) const {
         return orig + t*dir;
@@ -18,7 +18,7 @@ class ray {
 
   private:
     point3 orig;
-    vec3 dir;
+    Vec3 dir;
 };
 
 #endif
