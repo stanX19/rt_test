@@ -41,21 +41,24 @@ int main()
     //     }
     // }
 
-    auto material1 = make_shared<Dielectric>(1.5);
+    auto material1 = make_shared<Dielectric>(1.5, Color(0.9, 1.0, 0.5), 0.0);
     world.add(make_shared<Sphere>(point3(0, 1, 0), 1.0, material1));
 
     auto material2 = make_shared<Lambertian>(Color(0.4, 0.2, 0.1));
-    world.add(make_shared<Sphere>(point3(-4, 1, 0), 1.0, material2));
+    world.add(make_shared<Sphere>(point3(-2.5, 1, 0), 1.0, material2));
 
     auto material3 = make_shared<Metal>(Color(0.7, 0.6, 0.5), 0.0);
-    world.add(make_shared<Sphere>(point3(4, 1, 0), 1.0, material3));
+    world.add(make_shared<Sphere>(point3(2.5, 1, 0), 1.0, material3));
 	
-	// auto material_bubble_outer = make_shared<dielectric>(1.33);
-	// auto material_bubble_inner = make_shared<dielectric>(0.75);
-	// for (int i  = 0; i < 9; i++) {
-	// 	world.add(make_shared<Sphere>(point3(-1.0 + (i % 3) * 0.4 + (i % 2) * 0.1, -0.1 + (i / 3) * 0.4 - (i % 2) * 0.1, 0.5 - (i / 9) * 1.0), 0.05 + (i % 3) * 0.05, material_bubble_inner));
-	// 	world.add(make_shared<Sphere>(point3(-1.0 + (i % 3) * 0.4 + (i % 2) * 0.1, -0.1 + (i / 3) * 0.4 - (i % 2) * 0.1, 0.5 - (i / 9) * 1.0), 0.06 + (i % 3) * 0.05, material_bubble_outer));
-	// }
+	auto material_bubble_outer = make_shared<Dielectric>(1.33, Color(1, 1, 0.5));
+	auto material_bubble_inner = make_shared<Dielectric>(1 / 1.33);
+	for (int i  = 0; i < 9; i++) {
+		double x = 1.0;
+		double y = 1.0;
+		double z = 2;
+		world.add(make_shared<Sphere>(point3(x + (i % 3) * 0.4 + (i % 2) * 0.1, y + (i / 3) * 0.4 - (i % 2) * 0.1, z - (i / 9) * 1.0), 0.05 + (i % 3) * 0.05, material_bubble_inner));
+		world.add(make_shared<Sphere>(point3(x + (i % 3) * 0.4 + (i % 2) * 0.1, y + (i / 3) * 0.4 - (i % 2) * 0.1, z - (i / 9) * 1.0), 0.06 + (i % 3) * 0.05, material_bubble_outer));
+	}
 
 	Camara cam;
 
@@ -65,8 +68,8 @@ int main()
     cam.max_depth         = 50;
 
     cam.vfov     = 20;
-    cam.lookfrom = point3(13,2,3);
-    cam.lookat   = point3(0,0,0);
+    cam.lookfrom = point3(6,6,8);
+    cam.lookat   = point3(0,1,0);
     cam.vup      = Vec3(0,1,0);
 
     cam.defocus_angle = 0.0;
