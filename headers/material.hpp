@@ -79,8 +79,8 @@ public:
 			attenuation = Color(1,1,1);
 		} else {
 			ri = refraction_index;
-			double distance = r_in.direction().length() * rec.t;
-			attenuation = pow(albedo, distance);
+			// double distance = r_in.direction().length() * rec.t;
+			attenuation = albedo;  //pow(albedo, distance);
 		}
 		Vec3 unit_direction = unit_vector(r_in.direction());
 		double cos_theta = std::fmin(dot(-unit_direction, rec.normal), 1.0);

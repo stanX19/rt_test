@@ -34,7 +34,7 @@ int main()
                     world.add(make_shared<Sphere>(center, 0.2, sphere_material));
                 } else {
                     // glass
-                    sphere_material = make_shared<Dielectric>(1.5, 0.25);
+                    sphere_material = make_shared<Dielectric>(1.5, Color::random(), 0.25);
                     world.add(make_shared<Sphere>(center, 0.2, sphere_material));
                 }
             }
@@ -50,14 +50,16 @@ int main()
     auto material3 = make_shared<Metal>(Color(0.7, 0.6, 0.5), 0.0);
     world.add(make_shared<Sphere>(Point3(2.5, 1, 0), 1.0, material3));
 	
-	auto material_bubble_outer = make_shared<Dielectric>(1.33, Color(1, 1, 0.0));
+	auto material_bubble_outer = make_shared<Dielectric>(1.33, Color(1, 1, 0.3));
 	auto material_bubble_inner = make_shared<Dielectric>(1 / 1.33);
 	for (int i  = 0; i < 9; i++) {
-		double x = 1.0;
-		double y = 2.0;
-		double z = 3;
-		world.add(make_shared<Sphere>(Point3(x + (i % 3) * 0.4 + (i % 2) * 0.1, y + (i / 3) * 0.4 - (i % 2) * 0.1, z - (i / 9) * 1.0), 0.05 + (i % 3) * 0.05, material_bubble_inner));
-		world.add(make_shared<Sphere>(Point3(x + (i % 3) * 0.4 + (i % 2) * 0.1, y + (i / 3) * 0.4 - (i % 2) * 0.1, z - (i / 9) * 1.0), 0.06 + (i % 3) * 0.05, material_bubble_outer));
+		double s = 2.0;  // scale
+		double rad = (0.05 + (i % 3) * 0.05) * s;
+		double x = 0.5 + ((i % 3) * 0.5 + (i % 2 == 0) * 0.2) * s;
+		double y = 0.5 + ((i / 3) * 0.5 - (i % 2) * 0.2) * s;
+		double z = 4.0 - ((i % 3) * 0.5 + (i % 2 == 0) * 0.5) * s;
+		world.add(make_shared<Sphere>(Point3(x, y, z), rad, material_bubble_inner));
+		world.add(make_shared<Sphere>(Point3(x, y, z), rad + 0.1, material_bubble_outer));
 	}
 
 	Camera cam;
@@ -65,19 +67,20 @@ int main()
 	cam.aspect_ratio      = 16.0 / 9.0;
     cam.image_width       = 400;
     cam.samples_per_pixel = 10;
-    cam.max_depth         = 50;
+    cam.max_depth         = 4;
 
-    cam.vfov     = 20;
-    cam.lookfrom = Point3(6,6,8);
-    cam.lookat   = Point3(0,1,0);
+    cam.vfov     = 25;
+    cam.lookfrom = Point3(7,4,7);
+    cam.lookat   = Point3(0,0.5,0);
     cam.vup      = Vec3(0,1,0);
 
-    cam.defocus_angle = 0.0;
+    cam.defocus_angle = 0.4;
     cam.focus_dist    = 10.0;
 
-	if (0) {
-		cam.image_width = 640;
+	if (1) {
+		cam.image_width = 1920;
 		cam.samples_per_pixel = 500;
+		cam.max_depth         = 50;
 	}
 
 	cam.render(world);
