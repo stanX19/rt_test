@@ -7,7 +7,7 @@
 class Sphere : public Hittable
 {
 public:
-	Sphere(const point3 &center, double radius, shared_ptr<Material> mat)
+	Sphere(const Point3 &center, double radius, shared_ptr<Material> mat)
 		: center(center), radius(std::fmax(0, radius)), mat(mat) {}
 
 	bool hit(const Ray &r, interval ray_t, HitRecord &rec) const override
@@ -42,7 +42,7 @@ public:
 	}
 
 private:
-	point3 center;
+	Point3 center;
 	double radius;
 	shared_ptr<Material> mat;
 };

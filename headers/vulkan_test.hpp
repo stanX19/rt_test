@@ -40,7 +40,7 @@ inline double random_double(double min, double max) {
 #include "hittable.hpp"
 #include "hittable_list.hpp"
 #include "sphere.hpp"
-#include "camara.hpp"
+#include "camera.hpp"
 #include "material.hpp"
 
 #endif
