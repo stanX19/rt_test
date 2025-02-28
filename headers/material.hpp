@@ -2,7 +2,6 @@
 #define MATERIAL_HPP
 
 #include "ray.hpp"
-#include "material.hpp"
 #include "hittable.hpp"
 
 class Material
@@ -67,21 +66,16 @@ private:
 class Dielectric : public Material
 {
 public:
-	Dielectric(double refraction_index=1.0, const Color &albedo=Color(1, 1, 1), double fuzz = 0) : albedo(albedo), fuzz(fuzz), refraction_index(refraction_index) {}
+	Dielectric(double refraction_index = 1.0, const Color &albedo = Color(1, 1, 1), double fuzz = 0) : albedo(albedo), fuzz(fuzz), refraction_index(refraction_index) {}
 
 	bool scatter(const Ray &r_in, const HitRecord &rec, Color &attenuation, Ray &scattered)
 		const override
 	{
 		double ri;
 
-		if (rec.front_face) {
-			ri = 1.0 / refraction_index;
-			attenuation = Color(1,1,1);
-		} else {
-			ri = refraction_index;
-			// double distance = r_in.direction().length() * rec.t;
-			attenuation = albedo;  //pow(albedo, distance);
-		}
+		// double distance = r_in.direction().length() * rec.t;
+		attenuation = albedo; // pow(albedo, distance);
+		ri = rec.front_face? 1.0 / refraction_index: refraction_index;
 		Vec3 unit_direction = unit_vector(r_in.direction());
 		double cos_theta = std::fmin(dot(-unit_direction, rec.normal), 1.0);
 		double sin_theta = std::sqrt(1.0 - cos_theta * cos_theta);
@@ -90,9 +84,14 @@ public:
 		Vec3 direction;
 
 		if (cannot_refract || reflectance(cos_theta, ri) > random_double())
+		{
+			if (rec.front_face)
+				attenuation = Color(1, 1, 1);
 			direction = reflect(unit_direction, rec.normal);
+		}
 		else
 			direction = refract(unit_direction, rec.normal, ri);
+	
 		direction = unit_vector(direction) + (fuzz * random_unit_vector());
 
 		scattered = Ray(rec.p, direction);
@@ -106,12 +105,13 @@ private:
 	// the refractive index of the enclosing media
 	double refraction_index;
 
-	static double reflectance(double cosine, double refraction_index) {
-        // Use Schlick's approximation for reflectance.
-        auto r0 = (1 - refraction_index) / (1 + refraction_index);
-        r0 = r0*r0;
-        return r0 + (1-r0)*std::pow((1 - cosine),5);
-    }
+	static double reflectance(double cosine, double refraction_index)
+	{
+		// Use Schlick's approximation for reflectance.
+		auto r0 = (1 - refraction_index) / (1 + refraction_index);
+		r0 = r0 * r0;
+		return r0 + (1 - r0) * std::pow((1 - cosine), 5);
+	}
 };
 
 #endif

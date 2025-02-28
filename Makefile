@@ -14,7 +14,7 @@ HEADERS_INC := $(addprefix -I,$(HEADER_DIRS))
 
 IFLAGS		:= -I. $(HEADERS_INC)
 
-SFML_LIBS	= -lsfml-graphics -lsfml-window -lsfml-system
+SFML_LIBS	= #-lsfml-graphics -lsfml-window -lsfml-system
 GL_LIBS		= -lglfw -lGLU -lGL -lXrandr -lXxf86vm -lXi -lXinerama -lX11 -lrt -ldl
 LFLAGS		= $(SFML_LIBS) $(GL_LIBS)
 
