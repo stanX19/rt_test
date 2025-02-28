@@ -1,7 +1,8 @@
 #ifndef RAY_HPP
 #define RAY_HPP
 
-#include "vulkan_test.hpp"
+#include "utils.hpp"
+#include "vec3.hpp"
 
 class Ray {
   public:

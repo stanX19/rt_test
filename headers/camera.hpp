@@ -4,6 +4,7 @@
 #include "hittable.hpp"
 #include "material.hpp"
 #include "thread_pool.hpp"
+#include "color.hpp"
 #include <vector>
 #include <iostream>
 #include <future>

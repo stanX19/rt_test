@@ -3,8 +3,7 @@
 
 #include "vec3.hpp"
 #include "interval.hpp"
-
-#include <iostream>
+#include "utils.hpp"
 
 using Color = Vec3;
 

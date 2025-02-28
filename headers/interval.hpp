@@ -1,7 +1,7 @@
 #ifndef INTERVAL_H
 #define INTERVAL_H
 
-#include "vulkan_test.hpp"
+#include "utils.hpp"
 
 class interval {
   public:

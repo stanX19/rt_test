@@ -1,8 +1,11 @@
 #ifndef MATERIAL_HPP
 #define MATERIAL_HPP
 
+#include "vec3.hpp"
 #include "ray.hpp"
 #include "hittable.hpp"
+#include "color.hpp"
+#include "interval.hpp"
 
 class Material
 {

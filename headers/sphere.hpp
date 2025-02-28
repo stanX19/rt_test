@@ -2,7 +2,7 @@
 #define SPHERE_HPP
 
 #include "material.hpp"
-#include "vulkan_test.hpp"
+#include "hittable.hpp"
 
 class Sphere : public Hittable
 {

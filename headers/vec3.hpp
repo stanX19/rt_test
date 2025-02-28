@@ -1,7 +1,7 @@
 #ifndef VEC3_HPP
 #define VEC3_HPP
 
-#include "vulkan_test.hpp"
+#include "utils.hpp"
 
 class Vec3
 {

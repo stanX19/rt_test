@@ -2,6 +2,8 @@
 #define HITTABLE_HPP
 
 #include "vec3.hpp"
+#include "ray.hpp"
+#include "interval.hpp"
 
 class Material;
 
