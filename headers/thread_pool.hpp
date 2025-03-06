@@ -13,18 +13,7 @@ public:
     ThreadPool(size_t num_threads);
 
     template <class F>
-	std::future<decltype(std::declval<F>()())> enqueue(F&& f)
-	{
-		auto task = std::make_shared<std::packaged_task<decltype(f())()>>(std::forward<F>(f));
-		std::future<decltype(f())> res = task->get_future();
-		{
-			std::unique_lock<std::mutex> lock(queue_mutex);
-			tasks.emplace([task]()
-						{ (*task)(); });
-		}
-		condition.notify_one();
-		return res;
-	}
+	std::future<decltype(std::declval<F>()())> enqueue(F&& f);
 
     ~ThreadPool();
 
@@ -35,5 +24,7 @@ private:
     std::condition_variable condition;
     bool stop = false;
 };
+
+#include "thread_pool.tpp"
 
 #endif

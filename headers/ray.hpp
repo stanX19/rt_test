@@ -1,25 +1,21 @@
 #ifndef RAY_HPP
 #define RAY_HPP
 
-#include "utils.hpp"
 #include "vec3.hpp"
 
 class Ray {
-  public:
-    Ray() {}
+public:
+    Ray();
+    Ray(const Point3& origin, const Vec3& direction);
 
-    Ray(const Point3& origin, const Vec3& direction) : orig(origin), dir(direction) {}
+    const Point3& origin() const;
+    const Vec3& direction() const;
 
-    const Point3& origin() const  { return orig; }
-    const Vec3& direction() const { return dir; }
+    Point3 at(double t) const;
 
-    Point3 at(double t) const {
-        return orig + t*dir;
-    }
-
-  private:
+private:
     Point3 orig;
     Vec3 dir;
 };
 
-#endif
+#endif // RAY_HPP
