@@ -13,7 +13,7 @@ cd rt_test
 
 1. Go to srcs/main.cpp to change some constants
 
-2. Run by executing the following
+2. Compile and run
 
 	```
 	make run
