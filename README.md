@@ -10,7 +10,9 @@ cd rt_test
 make run
 ```
 
-After running, you can open the ppm file directly on macOS or use [this link](https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html) to view the file
+After running, you can open the ppm file directly on macOS or use [this link](https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html) to view the image.
+
+_the rendering might take awhile_
 
 ## Sample output
 
