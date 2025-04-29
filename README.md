@@ -15,9 +15,9 @@ cd rt_test
 
 2. Run by executing the following
 
-```
-make run
-```
+	```
+	make run
+	```
 
 3. After running, you can open the ppm image directly or use [this link](https://www.cs.rhodes.edu/welshc/COMP141_F16/ppmReader.html) to view the image.
 
